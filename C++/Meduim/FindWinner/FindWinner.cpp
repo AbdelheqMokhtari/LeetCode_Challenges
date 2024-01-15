@@ -1,38 +1,36 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <set>
+#include <unordered_map>
+#include <algorithm>
+#include <unordered_set>
 using namespace std;
 
 vector<vector<int>> findWinners(vector<vector<int>>& matches) {
-	vector<vector<int>> answer;
-	set<int> uniqueValues;
-	vector<int> zeromatch;
-	vector<int> onematch;
-	int i;
-	for (int i = 0; i < matches.size(); i++) {
-		for (int j = 0; j < matches[i].size(); j++) {
-			uniqueValues.insert(matches[i][j]);
-		}
-	}
-	for (int value : uniqueValues) {
-		int count = 0;
-		for (const auto& match : matches) {
-			if (value == match[1]) {
-				count++;
-			}
-		}
-		if (count == 0) {
-			zeromatch.push_back(value);
-		}
-		else if (count == 1) {
-			onematch.push_back(value);
-		}
-	}
-	answer.push_back(zeromatch);
-	answer.push_back(onematch);
+    vector<std::vector<int>> answer(2);
+    unordered_map<int, int> losses; 
+    unordered_set<int> played;      
 
-	return answer;
+    for (const auto& match : matches) {
+        played.insert(match[0]);  
+        played.insert(match[1]);  
+        losses[match[1]]++;       
+    }
+
+    for (int player : played) {
+        if (losses[player] == 0) {
+            answer[0].push_back(player);
+        }
+        else if (losses[player] == 1) {
+            answer[1].push_back(player);
+        }
+    }
+
+    // Sorting the vectors in increasing order
+    sort(answer[0].begin(), answer[0].end());
+    sort(answer[1].begin(), answer[1].end());
+
+    return answer;
 }
 
 int main() {
@@ -48,10 +46,6 @@ int main() {
 		std::cout << std::endl;
 	}
 
-
-
-
-
-}	
+}
 
 
