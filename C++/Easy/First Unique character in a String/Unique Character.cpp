@@ -4,9 +4,9 @@
 #include <unordered_set>
 using namespace std;
 
-unordered_map<char, int> firstUniqChar(string s) {
+int firstUniqChar(string s) {
 	unordered_map<char, int> myMap;
-	for (int i = 0; i < s.size(); i++) {
+	for (size_t i = 0; i < s.size(); i++) {
         auto it = myMap.find(s[i]);
 
         if (it != myMap.end()) {
@@ -20,18 +20,34 @@ unordered_map<char, int> firstUniqChar(string s) {
 
         }
 	}
-    return myMap;
+
+    auto it = myMap.begin();
+
+    while (it != myMap.end()) {
+        if (it->second > 1) {
+            it = myMap.erase(it);
+        }
+        else {
+            ++it;
+        }
+    }
+
+    for (size_t i = 0; i < s.size(); ++i) {
+        auto it = myMap.find(s[i]);
+        if (it != myMap.end()) {
+            // Found the first character in the map along with its position
+            return i;
+        }
+    }
+
+
+    return -1;
 }
 
 int main() {
-	string test = "leetcode";
-    unordered_map<char, int> testMap;
-    testMap= firstUniqChar(test);
-    // Print the content of the map
-    std::cout << "Content of the map:" << std::endl;
-    for (const auto& pair : testMap) {
-        std::cout << pair.first << ": " << pair.second << std::endl;
-    }
+	string test = "aab";
+    int result = firstUniqChar(test);
+    cout << result << endl;
 
 }	
 
