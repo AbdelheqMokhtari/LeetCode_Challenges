@@ -27,7 +27,8 @@ bool hasCycle(ListNode* head) {
 
 	return false;
 }
-
+// brute force approach
+/*
 ListNode* middleNode(ListNode* head) {
 	ListNode* current = head;
 	int count = 0;
@@ -48,6 +49,23 @@ ListNode* middleNode(ListNode* head) {
 
 	return head;
 }
+
+*/
+
+// two pointers appraoch
+
+ListNode* middleNode(ListNode* head) {
+	ListNode* slowPointer = head;
+	ListNode* fastPointer = head;
+	while (fastPointer != nullptr && fastPointer->next != nullptr) {
+		slowPointer = slowPointer->next;
+		fastPointer = fastPointer->next->next;
+	}
+
+	return slowPointer;
+
+}
+
 
 ListNode* detectCycle(ListNode* head) {
 	ListNode* fast = head;
@@ -89,7 +107,7 @@ int main() {
 	head->next->next = new ListNode(3);
 	head->next->next->next = new ListNode(4);
 	head->next->next->next->next = new ListNode(5);
-	//head->next->next->next->next->next = new ListNode(6);
+	head->next->next->next->next->next = new ListNode(6);
 	ListNode* middle = middleNode(head);
 	printLinkedList(head);
 	printLinkedList(middle);
