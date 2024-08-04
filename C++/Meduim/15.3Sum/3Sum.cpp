@@ -9,40 +9,39 @@ using namespace std;
 
 
 vector<vector<int>> threeSum(vector<int>& nums) {
-	int slow, fast;
-	vector<int> list;
-	bool flag = false;
 	vector<vector<int>> results;
+	vector<int> list;
+	int low_pointer, high_pointer;
+	int count;
 	std::sort(nums.begin(), nums.end());
 	for (int i = 0; i < nums.size()-2; i++) {
-
-		if (flag) {
-			flag = false;
+		low_pointer = i + 1;
+		high_pointer = nums.size() - 1;
+		if (i != 0 && nums[i] == nums[i - 1]) {
 			continue;
 		}
-
-		for (int j = 0; j < nums.size()-i; j++) {
-			slow = nums[i+1+j];
-			fast = nums[nums.size() - j - 1];
-			if (i + 1 + j >= nums.size() - j - 1) {
-				break;
-			}
-
-			
-			if ((slow + fast) == - nums[i]) {
+		while (low_pointer < high_pointer){
+			count = nums[i] + nums[low_pointer] + nums[high_pointer];
+			if (count == 0) {
 				list.push_back(nums[i]);
-				list.push_back(slow);
-				list.push_back(fast);
+				list.push_back(nums[low_pointer]);
+				list.push_back(nums[high_pointer]);
 				results.push_back(list);
 				list.clear();
+				low_pointer++;
+				while (nums[low_pointer] == nums[low_pointer - 1] && low_pointer < high_pointer)
+				{
+					low_pointer++;
+				}
+			}
+
+			else if (count < 0) {
+				low_pointer++;
+			}
+			else if (count > 0) {
+				high_pointer--;
 			}
 		}
-
-		if (nums[i] == nums[i + 1]) {
-			flag = true;
-		}
-
-		
 	}
 	return results;
 }
@@ -58,7 +57,7 @@ void vectorDisplay(vector<vector<int>> vec) {
 
 int main() {
 	std::vector<vector<int>> result;
-	std::vector<int> nums = { 0,0,0,0 };
+	std::vector<int> nums = { -1,0,1,2,-1,-4 };
 	result = threeSum (nums);
 	vectorDisplay(result);
 	return 0;
