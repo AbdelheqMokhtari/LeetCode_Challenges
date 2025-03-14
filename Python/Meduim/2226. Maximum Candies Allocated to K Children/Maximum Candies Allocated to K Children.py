@@ -17,50 +17,76 @@ Here are the steps to solve the problem using :
 6- for example if we have candies[j] = 13 and i = 5 we divide 13 by 5 and the results will be 2 so then we add 5 twice to the list.
 7- after finishing the division with all numbers of list candies than we check the size of ans  if the size is bigger or equal to the k so that's a valid solution.
 8- if we didn't find any solution than we return 0
-"""
-def maximumCandies(candies: List[int], k: int) -> int:
-    # Sort the candies list
-    max_candies = max(candies)
-    sum_candies = sum(candies)
-    # candies.sort(reverse=True)
-    # print(candies)
-    for i in range(max_candies, 0, -1):
-        if i * k > sum_candies :
-            continue
-        ans = []
-        for j in range(len(candies)):
-            n = candies[j] // i
-            ans.extend([i] * n)
-            if len(ans) >= k:
-                return i
+# """
+# def maximumCandies(candies: List[int], k: int) -> int:
+#     # Sort the candies list
+#     max_candies = max(candies)
+#     sum_candies = sum(candies)
+#     # candies.sort(reverse=True)
+#     # print(candies)
+#     for i in range(max_candies, 0, -1):
+#         if i * k > sum_candies :
+#             continue
+#         ans = []
+#         for j in range(len(candies)):
+#             n = candies[j] // i
+#             ans.extend([i] * n)
+#             if len(ans) >= k:
+#                 return i
           
-    return 0
+#     return 0
 
 ## Brute force solution updated 
 
-def maximumCandies(candies: List[int], k: int) -> int:
-    # Sort the candies list
-    max_candies = max(candies)
-    sum_candies = sum(candies)
+# def maximumCandies(candies: List[int], k: int) -> int:
+#     # Sort the candies list
+#     max_candies = max(candies)
+#     sum_candies = sum(candies)
 
-    if k > sum_candies:
-        return 0
+#     if k > sum_candies:
+#         return 0
     
-    # candies.sort(reverse=True)
-    # print(candies)
-    for i in range(max_candies, 0, -1):
-        if i * k > sum_candies :
-            continue
-        ans = 0
-        for j in range(len(candies)):
-            n = candies[j] // i
-            ans = ans + n
-            if ans >= k:
-                return i
+#     # candies.sort(reverse=True)
+#     # print(candies)
+#     for i in range(max_candies, 0, -1):
+#         if i * k > sum_candies :
+#             continue
+#         ans = 0
+#         for j in range(len(candies)):
+#             n = candies[j] // i
+#             ans = ans + n
+#             if ans >= k:
+#                 return i
           
-    return 0
+#     return 0
 
+## binary search approach 
 
+"""
+Time complexity: O(nlogm)
+Space complexity: O(1)
+"""
+def canAllocate(candies: List[int], k:int, x:int) -> bool:
+    ans = 0
+    for j in range(len(candies)):
+        ans = ans + candies[j] // x
+    return ans >= k
+
+def maximumCandies(candies: List[int], k: int) -> int:
+    max_candies = 0
+    for candy in candies:
+        max_candies = max(max_candies, candy)
+    left = 0
+    right = max_candies
+    while left < right:
+    # for _ in range(1):
+        middle = (right + left) + 1  // 2
+        if canAllocate(candies,k,middle):
+            left = middle
+            continue
+        right = middle - 1
+    return left
+    
 # Test cases
 if __name__ == '__main__':
     candies = [5, 2, 6, 2]
@@ -75,3 +101,7 @@ if __name__ == '__main__':
     children = 11
     print(maximumCandies(candies, children)) # output is 0   
 
+    # ## Test The function Can Allocate 
+
+    print(canAllocate([5, 2, 6, 2], k=3, x=3)) # Output is True
+    print(canAllocate([3,4], k=2, x=4)) # Output is False
