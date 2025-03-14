@@ -36,6 +36,29 @@ def maximumCandies(candies: List[int], k: int) -> int:
           
     return 0
 
+## Brute force solution updated 
+
+def maximumCandies(candies: List[int], k: int) -> int:
+    # Sort the candies list
+    max_candies = max(candies)
+    sum_candies = sum(candies)
+
+    if k > sum_candies:
+        return 0
+    
+    # candies.sort(reverse=True)
+    # print(candies)
+    for i in range(max_candies, 0, -1):
+        if i * k > sum_candies :
+            continue
+        ans = 0
+        for j in range(len(candies)):
+            n = candies[j] // i
+            ans = ans + n
+            if ans >= k:
+                return i
+          
+    return 0
 
 
 # Test cases
