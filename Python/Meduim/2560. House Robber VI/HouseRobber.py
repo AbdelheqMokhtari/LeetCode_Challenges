@@ -1,5 +1,17 @@
 from typing import List
 
+"""
+Here are the steps to solve the problem using :
+
+1- we explore all the values of reward possible from 1 to the highest reward of a house 
+using binary search 
+2- for each mid value we calculate how many house we can rob 
+3- if the total number of houses (housesRobbed) is greater or equal to k number of houses 
+that we are going to rob so it's valid we update the maxReward with the mid values
+4- otherwise we update the minReward with mid value + 1
+5- we Return the minReward and that the final result
+# """
+
 def minCapability(nums: List[int], k: int) -> int:
     minReward = 1
     maxReward = max(nums)
