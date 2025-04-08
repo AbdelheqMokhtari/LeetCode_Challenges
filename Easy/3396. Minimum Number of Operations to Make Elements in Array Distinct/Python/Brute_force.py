@@ -1,3 +1,6 @@
+# Time Complexity: O(N²)
+# Space Complexity: O(N)
+
 def minimumOperations(nums):
     ans = 0
     while(len(set(nums)) != len(nums)):
