@@ -1,5 +1,6 @@
 import scala.collection.mutable.ListBuffer
-
+// Time Complexity: O(N²)
+// Space Complexity: O(N)
 object Solution {
     def minimumOperations(nums: Array[Int]): Int = {
         var ans = 0
