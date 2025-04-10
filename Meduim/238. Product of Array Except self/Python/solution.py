@@ -1,3 +1,9 @@
+# Time Complexity O(N) (No Nested Loops).
+# Space Complecity O(3N) = O(N) (three aditional lists).
+# Approach used: Prefix and Suffix Product Arrays.
+# Data Structures : Arrays 
+
+
 def productExceptSelf(nums):
     n = len(nums)
     ans = [0] * n
