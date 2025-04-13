@@ -1,3 +1,6 @@
+# Time complexity O(N)
+# Space Compexity O(1)
+
 def isPalindrome(s: str) -> bool:
     s = ''.join(c.lower() for c in s if c.isalnum())
     left = 0
