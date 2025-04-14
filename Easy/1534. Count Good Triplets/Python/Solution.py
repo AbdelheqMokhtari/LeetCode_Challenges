@@ -1,3 +1,7 @@
+# Space Complexity : O(1).
+# Time Complexity : O(N^3).
+# Solution using Brute Force.
+
 def countGoodTriplets(arr, a, b, c) -> int:
     count = 0
     for i in range(0, len(arr) - 2):
